@@ -36,10 +36,7 @@ fn do_rpn(tokens, iter_state) -> Result(Int, RPNError) {
     [Val(_) as x, ..xs], _ -> {
       do_rpn(xs, #([x, ..stack], input_str))
     }
-    [Invalid(token), ..], _ -> {
-      Error(InvalidToken(token: token))
-    }
-    [Op(_), ..], [Invalid(x), ..] | [Op(_), ..], [_, Invalid(x), ..] -> {
+    [Invalid(x), ..], _ | _, [Invalid(x), ..] | _, [_, Invalid(x), ..] -> {
       Error(InvalidToken(token: x))
     }
     _, _ -> {
